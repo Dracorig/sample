@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gopika & Aaditya's Wedding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500&display=swap");
+
+      :root {
+        --blush: #f8e1e4;
+        --mint: #e0f0e8;
+        --ivory: #f9f5f0;
+        --gold: #d4af37;
+        --dark-gold: #b38f2a;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: var(--ivory);
+        color: #555;
+        scroll-behavior: smooth;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Playfair Display", serif;
+        color: #333;
+      }
+
+      .floral-divider {
+        position: relative;
+        height: 40px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='40' viewBox='0 0 100 40'%3E%3Cpath d='M10,20 Q15,10 20,20 T30,20 T40,20 T50,20 T60,20 T70,20 T80,20 T90,20' fill='none' stroke='%23d4af37' stroke-width='2'/%3E%3Ccircle cx='10' cy='20' r='2' fill='%23d4af37'/%3E%3Ccircle cx='30' cy='20' r='2' fill='%23d4af37'/%3E%3Ccircle cx='50' cy='20' r='2' fill='%23d4af37'/%3E%3Ccircle cx='70' cy='20' r='2' fill='%23d4af37'/%3E%3Ccircle cx='90' cy='20' r='2' fill='%23d4af37'/%3E%3C/svg%3E");
+        background-repeat: repeat-x;
+        background-position: center;
+        margin: 2rem 0;
+      }
+
+      .hero-pattern {
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+
+      .modal {
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .modal-open {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .modal-closed {
+        opacity: 0;
+        transform: scale(0.9);
+        pointer-events: none;
+      }
+
+      .gallery-item {
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover {
+        transform: scale(1.03);
+      }
+
+      .nav-link {
+        position: relative;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: var(--gold);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-fade-in {
+        animation: fadeIn 0.8s ease forwards;
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+
+      .delay-400 {
+        animation-delay: 0.4s;
+      }
+    </style>
+  </head>
+  <body class="relative">
+    <!-- Navigation -->
+    <nav
+      class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 shadow-sm z-50 transition-all duration-300"
+    >
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <h4 class="text-2xl font-bold text-gold-600" style="color: var(--gold)">
+          Gopika & Aaditya
+        </h4>
+        <div class="hidden md:flex space-x-8">
+          <a href="#home" class="nav-link text-gray-700 hover:text-gold-600"
+            >Home</a
+          >
+          <a href="#schedule" class="nav-link text-gray-700 hover:text-gold-600"
+            >Schedule</a
+          >
+          <a href="#venue" class="nav-link text-gray-700 hover:text-gold-600"
+            >Venue</a
+          >
+          <a href="#gallery" class="nav-link text-gray-700 hover:text-gold-600"
+            >Gallery</a
+          >
+        </div>
+        <button class="md:hidden text-gray-700" id="mobile-menu-button">
+          <i class="fas fa-bars text-2xl"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        class="md:hidden hidden bg-white w-full py-4 px-4 shadow-md"
+        id="mobile-menu"
+      >
+        <div class="flex flex-col space-y-4">
+          <a
+            href="#home"
+            class="text-gray-700 hover:text-gold-600"
+            onclick="toggleMobileMenu()"
+            >Home</a
+          >
+          <a
+            href="#schedule"
+            class="text-gray-700 hover:text-gold-600"
+            onclick="toggleMobileMenu()"
+            >Schedule</a
+          >
+          <a
+            href="#venue"
+            class="text-gray-700 hover:text-gold-600"
+            onclick="toggleMobileMenu()"
+            >Venue</a
+          >
+          <a
+            href="#gallery"
+            class="text-gray-700 hover:text-gold-600"
+            onclick="toggleMobileMenu()"
+            >Gallery</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section
+      id="home"
+      class="hero-pattern pt-32 pb-20 md:pt-40 md:pb-28 relative overflow-hidden"
+    >
+      <div class="container mx-auto px-4 text-center">
+        <div class="animate-fade-in">
+          <h1
+            class="text-4xl md:text-6xl font-bold mb-2"
+            style="color: var(--gold)"
+          >
+            Gopika & Aaditya
+          </h1>
+          <p class="text-xl md:text-2xl mb-6">Are Getting Married</p>
+
+          <div class="floral-divider mx-auto w-1/2"></div>
+
+          <p class="text-lg md:text-xl mb-8">November 16, 2025</p>
+
+          <!-- Countdown Timer -->
+          <div
+            class="flex justify-center space-x-2 md:space-x-4 mb-8 animate-fade-in delay-100"
+          >
+            <div
+              class="bg-white p-3 rounded-lg shadow-sm w-16 md:w-20 text-center"
+            >
+              <div class="text-2xl md:text-3xl font-bold countdown-days">
+                00
+              </div>
+              <div class="text-xs text-gray-500">Days</div>
+            </div>
+            <div
+              class="bg-white p-3 rounded-lg shadow-sm w-16 md:w-20 text-center"
+            >
+              <div class="text-2xl md:text-3xl font-bold countdown-hours">
+                00
+              </div>
+              <div class="text-xs text-gray-500">Hours</div>
+            </div>
+            <div
+              class="bg-white p-3 rounded-lg shadow-sm w-16 md:w-20 text-center"
+            >
+              <div class="text-2xl md:text-3xl font-bold countdown-minutes">
+                00
+              </div>
+              <div class="text-xs text-gray-500">Minutes</div>
+            </div>
+            <div
+              class="bg-white p-3 rounded-lg shadow-sm w-16 md:w-20 text-center"
+            >
+              <div class="text-2xl md:text-3xl font-bold countdown-seconds">
+                00
+              </div>
+              <div class="text-xs text-gray-500">Seconds</div>
+            </div>
+          </div>
+
+          <div class="flex justify-center space-x-4 animate-fade-in delay-200">
+            <button
+              onclick="openRSVPModal()"
+              class="px-6 py-3 rounded-full text-white hover:bg-dark-gold transition-colors"
+              style="background-color: var(--gold)"
+            >
+              RSVP Now
+            </button>
+            <button
+              onclick="addToCalendar()"
+              class="px-6 py-3 rounded-full border border-gold-600 text-gold-600 hover:bg-gold-50 transition-colors"
+              style="border-color: var(--gold); color: var(--gold)"
+            >
+              Add to Calendar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floral accents -->
+      <div class="absolute top-0 left-0 w-24 h-24 opacity-20">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M50,20 C60,10 70,15 80,20 C90,25 85,35 80,40 C75,45 65,40 60,50 C55,60 45,55 40,50 C35,45 25,50 20,40 C15,30 20,25 30,20 C40,15 50,10 50,20 Z"
+            fill="var(--gold)"
+          />
+        </svg>
+      </div>
+      <div
+        class="absolute bottom-0 right-0 w-24 h-24 opacity-20 transform rotate-180"
+      ></div>
+    </section>
+
+    <!-- Couple Section -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+          Together Forever
+        </h2>
+
+        <div
+          class="flex flex-col md:flex-row items-center justify-center gap-8"
+        >
+          <div class="text-center animate-fade-in delay-100">
+            <div
+              class="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden mx-auto mb-6 shadow-lg"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                alt="Bride"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Gopika Oonithan</h3>
+            <p class="text-gray-600">Daughter of Mr. & Mrs. Oonithan</p>
+          </div>
+
+          <div
+            class="text-4xl font-bold my-8 animate-fade-in delay-200"
+            style="color: var(--gold); font-family: Playfair Display, serif"
+          >
+            &
+          </div>
+
+          <div class="text-center animate-fade-in delay-300">
+            <div
+              class="w-48 h-48 md:w-56 md:h-56 rounded-full overflow-hidden mx-auto mb-6 shadow-lg"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                alt="Groom"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Aaditya Manoj</h3>
+            <p class="text-gray-600">Son of Mr. & Mrs. Manoj</p>
+          </div>
+        </div>
+
+        <div
+          class="max-w-2xl mx-auto mt-12 text-center animate-fade-in delay-400"
+        >
+          <p class="text-lg">
+            "We found love in each other's eyes and happiness in each other's
+            hearts. We invite you to celebrate our union as we begin this
+            beautiful journey together."
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Schedule Section -->
+    <section id="schedule" class="py-16" style="background-color: var(--blush)">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+          Wedding Events
+        </h2>
+
+        <div class="max-w-4xl mx-auto">
+          <div
+            class="flex flex-col md:flex-row mb-8 bg-white rounded-lg shadow-sm overflow-hidden animate-fade-in delay-200"
+          >
+            <div
+              class="md:w-1/3 p-6 text-center"
+              style="background-color: var(--gold)"
+            >
+              <h3 class="text-xl font-bold text-white">Wedding Ceremony</h3>
+              <p class="text-white">November 16, 2025</p>
+              <p class="text-white">11:40 AM - 12:30 PM</p>
+            </div>
+            <div class="md:w-2/3 p-6">
+              <p class="mb-4">
+                The sacred wedding rituals will be performed according to Hindu
+                traditions.
+              </p>
+              <p>
+                <i
+                  class="fas fa-map-marker-alt mr-2"
+                  style="color: var(--gold)"
+                ></i>
+                Uday Palace, Kowdiar, Trivandrum
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="flex flex-col md:flex-row bg-white rounded-lg shadow-sm overflow-hidden animate-fade-in delay-300"
+          >
+            <div
+              class="md:w-1/3 p-6 text-center"
+              style="background-color: var(--gold)"
+            >
+              <h3 class="text-xl font-bold text-white">Reception</h3>
+              <p class="text-white">November 16, 2023</p>
+              <p class="text-white">12:30 PM onwards</p>
+            </div>
+            <div class="md:w-2/3 p-6">
+              <p class="mb-4">
+                Join us for an evening of celebration, lunch, and dancing.
+              </p>
+              <p>
+                <i
+                  class="fas fa-map-marker-alt mr-2"
+                  style="color: var(--gold)"
+                ></i>
+                Uday Palace, Kowdiar, Trivandrum
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Venue Section -->
+    <section id="venue" class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+          Wedding Venue
+        </h2>
+
+        <div class="flex flex-col lg:flex-row gap-8">
+          <div class="lg:w-1/2 animate-fade-in">
+            <h3 class="text-2xl font-bold mb-4">Uday Palace</h3>
+            <p class="mb-4">
+              The wedding ceremony will take place at the beautiful Uday Palace,
+              a serene location that perfectly complements our special day.
+            </p>
+
+            <div class="mb-6">
+              <h4 class="text-lg font-bold mb-2" style="color: var(--gold)">
+                Address
+              </h4>
+              <p>Uday Palace Convention Centre</p>
+              <p>
+                Golf Links Rd, Kowdiar Gardens, Kowdiar, Thiruvananthapuram,
+                Kerala 695003
+              </p>
+            </div>
+          </div>
+
+          <div class="lg:w-1/2 animate-fade-in delay-100">
+            <div class="h-96 w-full rounded-lg overflow-hidden shadow-lg">
+              <!-- Google Maps Embed -->
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d126264.54262493088!2d76.88233307616986!3d8.52199241606052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x3b05bbcd96772f53%3A0xac5fcc83e692e856!2sGolf%20Links%20Rd%2C%20Kowdiar%20Gardens%2C%20Kowdiar%2C%20Thiruvananthapuram%2C%20Kerala%20695003!3m2!1d8.522001099999999!2d76.96473499999999!5e0!3m2!1sen!2sin!4v1755529406048!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              >
+              </iframe>
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a
+                href="https://maps.app.goo.gl/AfxXrxCzEB1QmQiP6"
+                target="_blank"
+                class="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+              >
+                <i class="fas fa-car mr-2" style="color: var(--gold)"></i> Get
+                Directions
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16" style="background-color: var(--mint)">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+          Our Moments
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-md animate-fade-in"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+              alt="Couple photo"
+              class="w-full h-64 object-cover"
+            />
+          </div>
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-md animate-fade-in delay-100"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+              alt="Engagement photo"
+              class="w-full h-64 object-cover"
+            />
+          </div>
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-md animate-fade-in delay-200"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1519657337289-077653f724ed?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+              alt="Couple photo"
+              class="w-full h-64 object-cover"
+            />
+          </div>
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-md animate-fade-in delay-300"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80"
+              alt="Couple photo"
+              class="w-full h-64 object-cover"
+            />
+          </div>
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-md animate-fade-in delay-100"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+              alt="Couple photo"
+              class="w-full h-64 object-cover"
+            />
+          </div>
+          <div
+            class="gallery-item rounded-lg overflow-hidden shadow-md animate-fade-in delay-200"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+              alt="Bride photo"
+              class="w-full h-64 object-cover"
+            />
+          </div>
+        </div>
+
+        <div class="text-center mt-8 animate-fade-in delay-400"></div>
+      </div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Will You Join Us?</h2>
+        <p class="text-lg mb-8 max-w-2xl mx-auto">
+          We would be honored to have you celebrate our special day with us.
+          Please RSVP by November 1, 2025.
+        </p>
+
+        <button
+          onclick="openRSVPModal()"
+          class="px-8 py-4 rounded-full text-white hover:bg-dark-gold transition-colors text-lg animate-fade-in"
+          style="background-color: var(--gold)"
+        >
+          RSVP Now
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-gray-100">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between">
+          <div class="mb-8 md:mb-0">
+            <h3 class="text-2xl font-bold mb-4" style="color: var(--gold)">
+              Gopika & Aaditya
+            </h3>
+            <p class="mb-4">November 16, 2025</p>
+            <p>Trivandrum, Kerala, India</p>
+          </div>
+
+          <div>
+            <h4 class="text-lg font-bold mb-4">Follow Us</h4>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm hover:bg-gray-200 transition-colors"
+              >
+                <i class="fab fa-instagram" style="color: var(--gold)"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm hover:bg-gray-200 transition-colors"
+              >
+                <i class="fab fa-facebook-f" style="color: var(--gold)"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm hover:bg-gray-200 transition-colors"
+              >
+                <i class="fab fa-twitter" style="color: var(--gold)"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- RSVP Modal -->
+    <div
+      id="rsvp-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 modal-closed"
+    >
+      <div
+        class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 max-h-screen overflow-y-auto"
+      >
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-2xl font-bold" style="color: var(--gold)">RSVP</h3>
+            <button
+              onclick="closeRSVPModal()"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <form id="rsvp-form" class="space-y-4">
+            <div>
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Full Name*</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-500"
+                style="focus: ring-color var(--gold)"
+              />
+            </div>
+
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Email*</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-500"
+              />
+            </div>
+
+            <div>
+              <label
+                for="phone"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Phone Number*</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-500"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >Will you be attending?*</label
+              >
+              <div class="mt-2 space-y-2">
+                <div class="flex items-center">
+                  <input
+                    id="attending-yes"
+                    name="attending"
+                    type="radio"
+                    value="Yes"
+                    checked
+                    class="h-4 w-4 text-gold-600 focus:ring-gold-500 border-gray-300"
+                  />
+                  <label
+                    for="attending-yes"
+                    class="ml-2 block text-sm text-gray-700"
+                    >Yes, I'll be there</label
+                  >
+                </div>
+                <div class="flex items-center">
+                  <input
+                    id="attending-no"
+                    name="attending"
+                    type="radio"
+                    value="No"
+                    class="h-4 w-4 text-gold-600 focus:ring-gold-500 border-gray-300"
+                  />
+                  <label
+                    for="attending-no"
+                    class="ml-2 block text-sm text-gray-700"
+                    >No, I can't make it</label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div id="guest-count-container">
+              <label
+                for="guest-count"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Number of Guests*</label
+              >
+              <select
+                id="guest-count"
+                name="guest_count"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-500"
+              >
+                <option value="1">1 (Just me)</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6+</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                for="message"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Message (Optional)</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="3"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gold-500"
+              ></textarea>
+            </div>
+
+            <div class="pt-4">
+              <button
+                type="submit"
+                class="w-full px-4 py-2 rounded-md text-white hover:bg-dark-gold transition-colors"
+                style="background-color: var(--gold)"
+              >
+                Submit RSVP
+              </button>
+            </div>
+          </form>
+
+          <div id="rsvp-success" class="hidden text-center py-8">
+            <div
+              class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-green-100"
+            >
+              <i class="fas fa-check text-green-600 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Thank You!</h3>
+            <p class="text-gray-600 mb-4">
+              Your RSVP has been successfully submitted.
+            </p>
+            <p class="text-gray-600">
+              We look forward to celebrating with you!
+            </p>
+            <button
+              onclick="closeRSVPModal()"
+              class="mt-6 px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Mobile menu toggle
+      function toggleMobileMenu() {
+        const menu = document.getElementById("mobile-menu");
+        menu.classList.toggle("hidden");
+      }
+
+      document
+        .getElementById("mobile-menu-button")
+        .addEventListener("click", toggleMobileMenu);
+
+      // RSVP Modal
+      function openRSVPModal() {
+        const modal = document.getElementById("rsvp-modal");
+        modal.classList.remove("modal-closed");
+        modal.classList.add("modal-open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeRSVPModal() {
+        const modal = document.getElementById("rsvp-modal");
+        modal.classList.remove("modal-open");
+        modal.classList.add("modal-closed");
+        document.body.style.overflow = "auto";
+
+        // Reset form and hide success message
+        document.getElementById("rsvp-form").reset();
+        document.getElementById("rsvp-success").classList.add("hidden");
+        document.getElementById("rsvp-form").classList.remove("hidden");
+      }
+
+      // Handle attendance radio buttons
+      const attendingRadios = document.querySelectorAll(
+        'input[name="attending"]'
+      );
+      const guestCountContainer = document.getElementById(
+        "guest-count-container"
+      );
+
+      attendingRadios.forEach((radio) => {
+        radio.addEventListener("change", function () {
+          if (this.value === "No") {
+            guestCountContainer.classList.add("hidden");
+          } else {
+            guestCountContainer.classList.remove("hidden");
+          }
+        });
+      });
+
+      // Form submission
+      document
+        .getElementById("rsvp-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // In a real implementation, you would send this data to your Google Sheets API endpoint
+          // For this demo, we'll just show the success message
+          document.getElementById("rsvp-form").classList.add("hidden");
+          document.getElementById("rsvp-success").classList.remove("hidden");
+
+          // Here's how you might send data to Google Sheets in a real implementation:
+          /*
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            fetch('YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('rsvp-form').classList.add('hidden');
+                document.getElementById('rsvp-success').classList.remove('hidden');
+            })
+            .catch(error => {
+                alert('There was an error submitting your RSVP. Please try again.');
+            });
+            */
+        });
+
+      // Countdown Timer
+      function updateCountdown() {
+        const weddingDate = new Date("November 16, 2025 11:30:00").getTime();
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.querySelector(".countdown-days").textContent = days
+          .toString()
+          .padStart(2, "0");
+        document.querySelector(".countdown-hours").textContent = hours
+          .toString()
+          .padStart(2, "0");
+        document.querySelector(".countdown-minutes").textContent = minutes
+          .toString()
+          .padStart(2, "0");
+        document.querySelector(".countdown-seconds").textContent = seconds
+          .toString()
+          .padStart(2, "0");
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // Add to Calendar function
+      function addToCalendar() {
+        // For demo purposes, we'll just show an alert
+        alert(
+          "Add to Calendar functionality would link to Google Calendar and iCal in a real implementation."
+        );
+
+        // In a real implementation, you would provide .ics file download and Google Calendar link
+        /*
+            const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=Gopika+%26+Aaditya's+Wedding&dates=20231215T113000Z/20231215T140000Z&details=Join+us+for+the+wedding+ceremony+of+Gopika+%26+Aaditya&location=Lotus+Temple%2C+Marine+Drive%2C+Mumbai&sf=true&output=xml`;
+            
+            const icsContent = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'BEGIN:VEVENT',
+                'DTSTART:20231215T113000Z',
+                'DTEND:20231215T140000Z',
+                'SUMMARY:Gopika & Aaditya\'s Wedding',
+                'DESCRIPTION:Join us for the wedding ceremony of Gopika & Aaditya',
+                'LOCATION:Uday Palace , Kowdiar , Trivandrum',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\n');
+            
+            // Open Google Calendar in new tab
+            window.open(googleCalendarUrl, '_blank');
+            
+            // Create download for ICS file
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'Gopika-Aaditya-Wedding.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            */
+      }
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          const targetId = this.getAttribute("href");
+          const targetElement = document.querySelector(targetId);
+
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Sticky navigation on scroll
+      window.addEventListener("scroll", function () {
+        const nav = document.querySelector("nav");
+        if (window.scrollY > 50) {
+          nav.classList.add("shadow-md");
+        } else {
+          nav.classList.remove("shadow-md");
+        }
+      });
+    </script>
+  </body>
+</html>
