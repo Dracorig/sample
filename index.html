@@ -860,44 +860,51 @@
       setInterval(updateCountdown, 1000);
 
       // Add to Calendar function
-      function addToCalendar() {
-        // For demo purposes, we'll just show an alert
-        alert(
-          "Add to Calendar functionality would link to Google Calendar and iCal in a real implementation."
-        );
+           function addToCalendar() {
+        // Event details
+        const eventTitle = "Gopika & Aaditya's Wedding";
+        const eventDetails =
+          "Join us for the wedding ceremony of Gopika & Aaditya";
+        const eventLocation = "Uday Palace, Kowdiar, Trivandrum";
+        const startDate = "20251116T113000Z"; // Dec 15, 2023 11:30 AM UTC
+        const endDate = "20251116T140000Z"; // Dec 15, 2023 02:00 PM UTC
 
-        // In a real implementation, you would provide .ics file download and Google Calendar link
-        /*
-            const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=Gopika+%26+Aaditya's+Wedding&dates=20231215T113000Z/20231215T140000Z&details=Join+us+for+the+wedding+ceremony+of+Gopika+%26+Aaditya&location=Lotus+Temple%2C+Marine+Drive%2C+Mumbai&sf=true&output=xml`;
-            
-            const icsContent = [
-                'BEGIN:VCALENDAR',
-                'VERSION:2.0',
-                'BEGIN:VEVENT',
-                'DTSTART:20231215T113000Z',
-                'DTEND:20231215T140000Z',
-                'SUMMARY:Gopika & Aaditya\'s Wedding',
-                'DESCRIPTION:Join us for the wedding ceremony of Gopika & Aaditya',
-                'LOCATION:Uday Palace , Kowdiar , Trivandrum',
-                'END:VEVENT',
-                'END:VCALENDAR'
-            ].join('\n');
-            
-            // Open Google Calendar in new tab
-            window.open(googleCalendarUrl, '_blank');
-            
-            // Create download for ICS file
-            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'Gopika-Aaditya-Wedding.ics');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            */
+        // --- Google Calendar URL ---
+        const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+          eventTitle
+        )}&dates=${startDate}/${endDate}&details=${encodeURIComponent(
+          eventDetails
+        )}&location=${encodeURIComponent(eventLocation)}&sf=true&output=xml`;
+
+        // Open Google Calendar
+        window.open(googleCalendarUrl, "_blank");
+
+        // --- ICS File Content ---
+        const icsContent = [
+          "BEGIN:VCALENDAR",
+          "VERSION:2.0",
+          "BEGIN:VEVENT",
+          `DTSTART:${startDate}`,
+          `DTEND:${endDate}`,
+          `SUMMARY:${eventTitle}`,
+          `DESCRIPTION:${eventDetails}`,
+          `LOCATION:${eventLocation}`,
+          "END:VEVENT",
+          "END:VCALENDAR",
+        ].join("\n");
+
+        // Create downloadable ICS file
+        const blob = new Blob([icsContent], {
+          type: "text/calendar;charset=utf-8",
+        });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "Gopika-Aaditya-Wedding.ics");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
-
       // Smooth scrolling for navigation links
       document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
